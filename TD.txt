@@ -1,0 +1,31 @@
+Le but du jeu est d'obtenir le meilleur score.
+
+A chaque niveau , 2 phases sont présentes :
+
+Phase Mapping : 
+- Le joueur à une barre de difficultée qui scale en fonction du niveau , il a le choix de depasser le seuil de difficultée , ce qui lui accordera plus de points.
+- Pour remplir la barre de difficultée, le joueur peut : - Raccourcir le chemin des ennemies
+														 - Agrandir la grille de placement , qui lui retire des emplacements de Tourelles
+														 - Scale la vie des ennemies ou leurs nombres 
+														 - Double degats quand un ennemi passe
+														 - Commencer avec moins d'argent
+														 - Les tourelles coutent plus cher
+														 - Ect
+														 
+Phase Playing : 
+- Tower defense classique , le joueur pose des tourelles et les améliorent, elles ont des natures type électrique , magie ... qui infligent plus ou moins de degats
+selon la nature des ennemies.														 
+- Le joueur à un certain nombre de points de vie , quand un ennemie arrive à la fin du chemin le joueur perd des points de vie.
+- Pour pouvoir upgrade son système de défense , le joueur gagne un income à la fin de chaque vague et un petit income en tuant un ennemie qui scale selon l'ennemie
+
+caractere feminin bonne voir tres bonne 
+
+
+Coté codage Mapping :
+
+Premier int = type de case
+
+Code numérique :- 00 = emplacement libre
+				- 99 = Chemin des ennemies
+				- 1x = tourelle où x est le type de la tourelle
+				- 5x = obstacle où x est le type d'obstacle
