@@ -4,13 +4,13 @@ A chaque niveau , 2 phases sont présentes :
 
 Phase Mapping : 
 - Le joueur à une barre de difficultée qui scale en fonction du niveau , il a le choix de depasser le seuil de difficultée , ce qui lui accordera plus de points.
-- Pour remplir la barre de difficultée, le joueur peut : - Raccourcir le chemin des ennemies
-														 - Agrandir la grille de placement , qui lui retire des emplacements de Tourelles
-														 - Scale la vie des ennemies ou leurs nombres 
-														 - Double degats quand un ennemi passe
-														 - Commencer avec moins d'argent
-														 - Les tourelles coutent plus cher
-														 - Ect
+- Pour remplir la barre de difficultée, le joueur peut :- Raccourcir le chemin des ennemies
+							- Agrandir la grille de placement , qui lui retire des emplacements de Tourelles
+							- Scale la vie des ennemies ou leurs nombres 
+							- Double degats quand un ennemi passe
+							- Commencer avec moins d'argent
+							- Les tourelles coutent plus cher
+							- Ect
 														 
 Phase Playing : 
 - Tower defense classique , le joueur pose des tourelles et les améliorent, elles ont des natures type électrique , magie ... qui infligent plus ou moins de degats
@@ -26,6 +26,8 @@ Coté codage Mapping :
 Premier int = type de case
 
 Code numérique :- 00 = emplacement libre
-				- 99 = Chemin des ennemies
-				- 1x = tourelle où x est le type de la tourelle
-				- 5x = obstacle où x est le type d'obstacle
+		- 99 = Chemin des ennemies
+		- 98 = spawn ennemis
+		- 97 = fin du chemins des ennemis
+		- 1x = tourelle où x est le type de la tourelle
+		- 5x = obstacle où x est le type d'obstacle
