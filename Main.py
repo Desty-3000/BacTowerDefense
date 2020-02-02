@@ -1,4 +1,5 @@
-﻿import Mapping
+﻿import ennemis
+import Mapping
 import pygame
 
 pygame.init()
@@ -18,6 +19,7 @@ YMAXGRID = 1000
 
 fenetre = pygame.display.set_mode((X, Y))
 
+ennemis.differents_ennemis()    #j'appelle cette fonction pour avoir les type d'ennemis
 
 Jeu = True
 
