@@ -31,10 +31,11 @@ def Initiate_Mapping_Phase(Seuil_Difficulte,Niveau,Phase):
 
 Seuil_Difficulte,Mapping_Phase = Initiate_Mapping_Phase(Seuil_Difficulte,Niveau,Mapping_Phase)
 
-def Refresh_Difficulty_Bar(Curr_Difficulte,Seuil_Difficulte,fenetre):
-    pygame.draw.rect(fenetre,(105,105,105),(100,20,200,20))
-    pygame.draw.rect(fenetre,(255,255,0),(100,20,200*(Curr_Difficulte/Seuil_Difficulte),20))
-    IntDif = text(20,str(Curr_Difficulte)+"/"+str(Seuil_Difficulte),(255,255,255),(0,0,0),320,20,fenetre)
+def Refresh_Difficulty_Bar(Curr_Difficulte,Seuil_Difficulte,fenetre,Show):
+    if Show:
+        pygame.draw.rect(fenetre,(105,105,105),(100,20,200,20))
+        pygame.draw.rect(fenetre,(255,255,0),(100,20,200*(Curr_Difficulte/Seuil_Difficulte),20))
+        IntDif = text(20,str(Curr_Difficulte)+"/"+str(Seuil_Difficulte),(255,255,255),(0,0,0),320,20,fenetre)
 
 
 
