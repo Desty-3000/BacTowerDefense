@@ -35,10 +35,18 @@ def Refresh_Difficulty_Bar(Curr_Difficulte,Seuil_Difficulte,fenetre,Show,X,Y):
     if Show:
         pygame.draw.rect(fenetre,(105,105,105),(2/6*X,20,2/6*X,20))
         pygame.draw.rect(fenetre,(255,255,0),(2/6*X,20,(2/6*X)*(Curr_Difficulte/Seuil_Difficulte),20))
-        IntDif = text(20,str(Curr_Difficulte)+"/"+str(Seuil_Difficulte),(255,255,255),(176,224,230),520,20,fenetre)
+        IntDif = text(20,str(Curr_Difficulte)+"/"+str(Seuil_Difficulte),(255,255,255),(176,224,230),2/7*X,20,fenetre)
 
 
-def DrawMapAndGUI(window,X,Y):
-    pygame.draw.rect(window,(120,120,120),(0,0,1/6*X,Y))
-
-
+def DrawMapAndGUI(window,PlayingState,X,Y,money,score,level):
+    if PlayingState:
+        pygame.draw.rect(window,(120,120,120),(0,0,1/6*X,Y))
+        a = X/2+1/10*X
+        b = Y/2
+        grid = pygame.Rect(0,0,4/6*X,5/6*Y)
+        grid.center = (a,b)
+        pygame.draw.rect(window,(34,139,34),(grid.x,grid.y,4/6*X,5/6*Y))
+        IntDif = text(20,str(money)+" $",(255,255,255),(176,224,230),7/10*X,20,window)
+        IntDif = text(20,str(score)+" pts",(255,255,255),(176,224,230),8/10*X,20,window)
+        IntDif = text(20,"lvl "+str(level),(255,255,255),(176,224,230),9/10*X,20,window)
+        return [a,b]

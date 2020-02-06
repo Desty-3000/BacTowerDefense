@@ -13,12 +13,7 @@ Y = pygame.display.Info().current_h
 
 events = pygame.event.get()
 
-XMINGRID = 2/7*X
-YMINGRID = 2/7*Y
-
-XMAXGRID = 6/7*X
-YMAXGRID = 6/7*Y
-
+TOPLEFTGRID = [0,0]
 
 fenetre = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
 
@@ -29,12 +24,13 @@ Jeu = True
 while Jeu :
     events = pygame.event.get()
     menu.IsMappingMenuOpen = Mapping.Mapping_Phase
+    niveau = Mapping.Niveau
     fenetre.fill(couleurFond)
-    Mapping.DrawMapAndGUI(fenetre,X,Y)
+    TOPLEFTGRID = Mapping.DrawMapAndGUI(fenetre,menu.IsPlaying,X,Y,0,score,niveau)
     Mapping.Refresh_Difficulty_Bar(Mapping.Curr_Difficulte,Mapping.Seuil_Difficulte,fenetre,menu.IsMappingMenuOpen,X,Y) #Sert a refresh la barre de difficulté (TEMPORAIREMENT ICI POUR LES TESTS)
-    Jeu,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,Mapping.Mapping_Phase = menu.DrawMainMenu(fenetre,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,events,Jeu,X,Y,Mapping.Mapping_Phase) #Sert a gérer le menu principal
+    Jeu,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,Mapping.Mapping_Phase,menu.IsPlaying = menu.DrawMainMenu(fenetre,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,events,Jeu,X,Y,Mapping.Mapping_Phase,menu.IsPlaying) #Sert a gérer le menu principal
     menu.IsOptionMenuOpen,menu.IsMainMenuOpen = menu.DrawOptionMenu(fenetre,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,events,X,Y) #Sert a gérer le menu des options
-    menu.DrawMappingMenu(fenetre,Mapping.Mapping_Phase)
+    menu.DrawMappingMenu(fenetre,Mapping.Mapping_Phase,events)
     for event in events:
         if event.type == pygame.QUIT:
             Jeu = False

@@ -20,9 +20,9 @@ IsOptionMenuOpen = False
 IsMappingMenuOpen = False
 IsAttackMenuOpen = False
 IsPauseMenuOpen = False
+IsPlaying = False
 
-
-def DrawMainMenu(window,MenuStatut,OptionMenuStatut,Event,Jeu,X,Y,M):
+def DrawMainMenu(window,MenuStatut,OptionMenuStatut,Event,Jeu,X,Y,M,PlayingState):
     if MenuStatut:
 
         bouton1 = text(50,"Jouer",(255,255,255),(176,224,230),X/2,5/9*Y)
@@ -34,13 +34,13 @@ def DrawMainMenu(window,MenuStatut,OptionMenuStatut,Event,Jeu,X,Y,M):
         for event in Event:
             if event.type == 5 and event.button == 1:
                 if bouton1.playRect.collidepoint(pygame.mouse.get_pos()):
-                    return True,MenuStatut,OptionMenuStatut,True
+                    return True,False,OptionMenuStatut,True,True
                 if bouton2.playRect.collidepoint(pygame.mouse.get_pos()):
-                    return True,False,True,False
+                    return True,False,True,False,False
                 if bouton3.playRect.collidepoint(pygame.mouse.get_pos()):
-                    return False,False,False,False
+                    return False,False,False,False,PlayingState
     if Jeu != False:
-        return True,MenuStatut,OptionMenuStatut,M
+        return True,MenuStatut,OptionMenuStatut,M,PlayingState
 
 
 def DrawOptionMenu(window,MainMenuState,MenuStatut,Event,X,Y):
@@ -53,7 +53,7 @@ def DrawOptionMenu(window,MainMenuState,MenuStatut,Event,X,Y):
                     return False,True
     return MenuStatut,MainMenuState
 
-def DrawMappingMenu(window,Mapping_Phase):
+def DrawMappingMenu(window,Mapping_Phase,Event):
     if Mapping_Phase:
         bouton = text(20,"Rajouter une colonne à droite",(255,255,255),(120,120,120),150,20)
         bouton2 = text(20,"Rajouter une ligne en bas",(255,255,255),(120,120,120),130,70)
@@ -66,5 +66,6 @@ def DrawMappingMenu(window,Mapping_Phase):
         window.blit(bouton4.playBtn,bouton4.playRect)
 
         for event in Event:
-            if event.type == 5 and event.button = 1:
+            if event.type == 5 and event.button == 1:
                 if bouton.playRect.collidepoint(pygame.mouse.get_pos()):
+                    print("dkf")
