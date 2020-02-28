@@ -1,3 +1,4 @@
+import pygame
 import mapping
 
 ennemis_vivant = []
@@ -11,10 +12,8 @@ class types:
         self.vie = vie
         self.element = element
         self.recompense = recompense
-
-def differents_ennemis():
-    ennemis_normal = types(1,(0,0,255),1,'normal',10)
-    return ennemis_normal
+        self.Index = mapping.startCoordIndex
+        self.rectangle = pygame.rect(mapping.startCoordIndex[0]*mapping.c,mapping.startCoordIndex[1]*mapping.d,mapping.c/5,mapping.d/5)
 
 def init_spawn(carte):
     for index,liste in enumerate(carte):
@@ -23,38 +22,22 @@ def init_spawn(carte):
                 spawn = [index,index2]          #determine l'index du spawn, ce qui va permetre de calculer les coordonné pour draw les ennemis avec spawn[0] = y et spawn[1] = x
     return spawn
 
-def spawn_ennemis(type_ennemis,fenetre,spawn):
-    ennemis = pygame.draw.rect(fenetre,type_ennemis.couleur,(spawn[1]*50,spawn[0]*50,10,10))    #les coordonnés sont temporaire
-    ennemis_vivant.append(ennemis)
-    ennemis_vie.append(type_ennemis.vie)
-    position.append(spawn)
-    return spawn,ennemis_vie,ennemis_vivant
+def spawn_ennemis(type_ennemis,fenetre):
+    if pygame.time.get_tick()%1000 == 0:
+        pygame.draw.rect(fenetre,type_ennemis.couleur,type_ennemis.rectangle)    #les coordonnés sont temporaire
+        ennemis_vivant.append(type_ennemis)
+    return ennemis_vivant
 
-def déplacement(carte,position_ennemis,liste_ennemis,fenetre):
-    for index,valeur in enumerate(liste_ennemis):
-        y = position_ennemis[index][0]
-        x = position_ennemis[index][1]
-        if carte[y+1][x] == 99:
-            for i in range(50):
-                valeur = pygame.move(0,1)
-                nouvelle_ennemis = pygame.draw.rect(fenetre,(0,0,255),valeur)
-                liste_ennemis[index] = nouvelle_ennemis
 
-        elif carte[y-1][x] == 99:
-            for i in range(50):
-                valeur = pygame.move(0,-1)
-                nouvelle_ennemis = pygame.draw.rect(fenetre,(0,0,255),valeur)
-                liste_ennemis[index] = nouvelle_ennemis
-        elif carte[y][x+1] == 99:
-            for i in range(50):
-                valeur = pygame.move(1,0)
-                nouvelle_ennemis = pygame.draw.rect(fenetre,(0,0,255),valeur)
-                liste_ennemis[index] = nouvelle_ennemis
-        elif carte[y][x-1] == 99:
-            for i in range(50):
-                valeur = pygame.move(-1,0)
-                nouvelle_ennemis = pygame.draw.rect(fenetre,(0,0,255),valeur)
-                liste_ennemis[index] = nouvelle_ennemis
+
+def déplacement(carte,liste_ennemis,fenetre):
+    for ennemis in liste_ennemis:
+        X = ennemis.Index[0]
+        Y = ennemis.Index[1]
+        if carte[Y][X+1] ==
+
+
+
 
 
 
