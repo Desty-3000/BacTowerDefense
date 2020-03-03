@@ -5,10 +5,6 @@ ennemis_vivant = []
 ennemis_vie = []
 position = []
 
-class joueur:
-    def __init__(self):
-        self.vie = 5
-
 class types:
     def __init__(self,vitesse,couleur,vie,element,recompense):
         self.vitesse = vitesse
@@ -28,7 +24,7 @@ def spawn_ennemis(type_ennemis,fenetre):
 
 
 
-def déplacement(carte,liste_ennemis,fenetre,X_case,Y_case,phase):     #X_case et Y_case en pixel
+def déplacement(carte,liste_ennemis,fenetre,X_case,Y_case,phase,joueur):     #X_case et Y_case en pixel
     if phase == 'vivant':
         for ennemis in liste_ennemis:
             X = ennemis.Index[0]
