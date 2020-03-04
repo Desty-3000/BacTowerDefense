@@ -15,17 +15,14 @@ events = pygame.event.get()
 
 fenetre = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
 
-ennemis_lvl1 = ennemis.types(1,(0,0,255),2,'normal',2)
+ennemis.differents_ennemis()    #j'appelle cette fonction pour avoir les type d'ennemis
 
 Jeu = True
 
 while Jeu :
 
-    print(Mapping.rectList)
-
     events = pygame.event.get()
 
-    menu.IsMappingMenuOpen = Mapping.Mapping_Phase
 
     niveau = Mapping.Niveau
 
@@ -35,15 +32,13 @@ while Jeu :
     #DrawMapAndGUI
     Mapping.GRID,Mapping.rectList,Mapping.caseList = Mapping.DrawMapAndGUI(fenetre,menu.IsPlaying,X,Y,0,score,niveau,Mapping.MAP,Mapping.nbreLigne,Mapping.nbreColonne,Mapping.rectList,Mapping.GRID,Mapping.c,Mapping.d,Mapping.caseList)
 
-    Mapping.Refresh_Difficulty_Bar(Mapping.Curr_Difficulte,Mapping.Seuil_Difficulte,fenetre,menu.IsMappingMenuOpen,X,Y) #Sert a refresh la barre de difficulté (TEMPORAIREMENT ICI POUR LES TESTS)
+    Mapping.Refresh_Difficulty_Bar(Mapping.Curr_Difficulte,Mapping.Seuil_Difficulte,fenetre,menu.IsPlaying,X,Y) #Sert a refresh la barre de difficulté (TEMPORAIREMENT ICI POUR LES TESTS)
     #DrawMainMenu
-    Jeu,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,Mapping.Mapping_Phase,menu.IsPlaying = menu.DrawMainMenu(fenetre,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,events,Jeu,X,Y,Mapping.Mapping_Phase,menu.IsPlaying) #Sert a gérer le menu principal
+    Jeu,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,Mapping.Mapping_Phase,menu.IsPlaying,menu.MappingPhaseIndex = menu.DrawMainMenu(fenetre,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,events,Jeu,X,Y,Mapping.Mapping_Phase,menu.IsPlaying,menu.MappingPhaseIndex) #Sert a gérer le menu principal
     #DrawOptionMenu
     menu.IsOptionMenuOpen,menu.IsMainMenuOpen = menu.DrawOptionMenu(fenetre,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,events,X,Y) #Sert a gérer le menu des options
     #DrawMappingMenu
-    Mapping.nbreColonne,Mapping.nbreLigne,Mapping.Curr_Difficulte,Mapping.MAP,menu.IsPainting,menu.paintPhase = menu.DrawMappingMenu(fenetre,Mapping.Mapping_Phase,events,Mapping.nbreLigne,Mapping.nbreColonne,Mapping.Curr_Difficulte,Mapping.MAP,Mapping.GRID,menu.IsPainting,menu.paintPhase)
-    #PaintMap
-    Mapping.MAP,Mapping.isStartPlaced,menu.endCoordIndex = menu.PaintMap(menu.IsPainting,Mapping.GRID,Mapping.MAP,menu.paintPhase,X,events,Mapping.nbreColonne,fenetre,Mapping.rectList,Mapping.isStartPlaced,Mapping.nbreLigne,menu.endCoordIndex)
+    Mapping.nbreColonne,Mapping.nbreLigne,Mapping.Curr_Difficulte,Mapping.MAP,menu.MappingPhaseIndex = menu.DrawMappingMenu(fenetre,menu.MappingPhaseIndex,events,Mapping.nbreLigne,Mapping.nbreColonne,Mapping.Curr_Difficulte,Mapping.MAP,Mapping.GRID,X,Y)
 
     for case in Mapping.caseList:
         case.update()

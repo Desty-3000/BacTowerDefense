@@ -10,6 +10,10 @@ GRID = pygame.Rect(1,1,1,1)
 caseList = []
 rectList = []
 
+endCoordIndex =   []
+startCoordIndex = []
+
+
 isStartPlaced = False
 gridinit = False
 
@@ -59,8 +63,8 @@ MAP =[
 [0,0,0,0,0,0,0,0,0,0]
 ]
 
-c = 0   #largeur
-d = 0   #longueur
+c = 0
+d = 0
 def drawMap(display,X,Y,colonne,ligne,fenetre):
 
     grid = pygame.Rect(0,0,4/6*X,5/6*Y)
@@ -100,9 +104,6 @@ def Refresh_Difficulty_Bar(Curr_Difficulte,Seuil_Difficulte,fenetre,Show,X,Y):
         else:
             pygame.draw.rect(fenetre,(255,255,0),(2/6*X,20,(2/6*X)*(Curr_Difficulte/Seuil_Difficulte),20))
         IntDif = text(20,str(Curr_Difficulte)+"/"+str(Seuil_Difficulte),(255,255,255),(176,224,230),2/7*X,20,fenetre)
-
-def updateMap():
-    return
 
 def DrawMapAndGUI(window,PlayingState,X,Y,money,score,level,matrice,ligne,colonne,rectlist,grid,c,d,caselist):
 
