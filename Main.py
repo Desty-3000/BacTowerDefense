@@ -17,31 +17,31 @@ fenetre = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
 
 ennemis.differents_ennemis()    #j'appelle cette fonction pour avoir les type d'ennemis
 
+Mapping.MAP = Mapping.InitMap(fenetre,Mapping.MAP)
+
 Jeu = True
 
 while Jeu :
-
     events = pygame.event.get()
-
-
+    print(Mapping.pathNumber)
     niveau = Mapping.Niveau
 
     fenetre.fill(couleurFond)
     #drawMap
-    Mapping.GRID,Mapping.c,Mapping.d = Mapping.drawMap(Mapping.isMapDisplayed,X,Y,Mapping.nbreColonne,Mapping.nbreLigne,fenetre)
+    Mapping.GRID,Mapping.caseWid,Mapping.caseLen = Mapping.drawMap(X,Y,Mapping.nbreColonne,Mapping.nbreLigne,fenetre)
     #DrawMapAndGUI
-    Mapping.GRID,Mapping.rectList,Mapping.caseList = Mapping.DrawMapAndGUI(fenetre,menu.IsPlaying,X,Y,0,score,niveau,Mapping.MAP,Mapping.nbreLigne,Mapping.nbreColonne,Mapping.rectList,Mapping.GRID,Mapping.c,Mapping.d,Mapping.caseList)
-
+    Mapping.DrawGUI(fenetre,menu.IsPlaying,X,Y,0,score,niveau,Mapping.GRID)
+    #drawCases
+    Mapping.drawCases(Mapping.MAP,Mapping.nbreColonne,Mapping.nbreLigne,Mapping.caseWid,Mapping.caseLen,Mapping.GRID,menu.IsPlaying,Mapping.pathNumber)
+    #Refresh Difficulty Bar
     Mapping.Refresh_Difficulty_Bar(Mapping.Curr_Difficulte,Mapping.Seuil_Difficulte,fenetre,menu.IsPlaying,X,Y) #Sert a refresh la barre de difficulté (TEMPORAIREMENT ICI POUR LES TESTS)
     #DrawMainMenu
-    Jeu,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,Mapping.Mapping_Phase,menu.IsPlaying,menu.MappingPhaseIndex = menu.DrawMainMenu(fenetre,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,events,Jeu,X,Y,Mapping.Mapping_Phase,menu.IsPlaying,menu.MappingPhaseIndex) #Sert a gérer le menu principal
+    Jeu,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,menu.IsPlaying,menu.MappingPhaseIndex = menu.DrawMainMenu(fenetre,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,events,Jeu,X,Y,menu.IsPlaying,menu.MappingPhaseIndex) #Sert a gérer le menu principal
     #DrawOptionMenu
     menu.IsOptionMenuOpen,menu.IsMainMenuOpen = menu.DrawOptionMenu(fenetre,menu.IsMainMenuOpen,menu.IsOptionMenuOpen,events,X,Y) #Sert a gérer le menu des options
     #DrawMappingMenu
     Mapping.nbreColonne,Mapping.nbreLigne,Mapping.Curr_Difficulte,Mapping.MAP,menu.MappingPhaseIndex = menu.DrawMappingMenu(fenetre,menu.MappingPhaseIndex,events,Mapping.nbreLigne,Mapping.nbreColonne,Mapping.Curr_Difficulte,Mapping.MAP,Mapping.GRID,X,Y)
 
-    for case in Mapping.caseList:
-        case.update()
 
     for event in events:
         if event.type == pygame.QUIT:

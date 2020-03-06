@@ -7,6 +7,7 @@ import pygame
 import Mapping
 import math
 
+#Classe pour simplifier l'écriture sur l'écran
 class text:
     def __init__(self,width,text,color1,color2,x,y,fenetre):
         self.font = pygame.font.Font('freesansbold.ttf', width)
@@ -15,18 +16,22 @@ class text:
         self.playRect.center = (x,y)
         fenetre.blit(self.playBtn, self.playRect)
 
-
+#Les noms parlent d'eux même ...
 IsMainMenuOpen = True
 IsOptionMenuOpen = False
 IsPauseMenuOpen = False
+
+#Si l'écran affiche le jeu ou les menus
 IsPlaying = False
+
+#Onglet actuel du menu à gauche en jeu
 MappingPhaseIndex = 0
 
 
 
 
-
-def DrawMainMenu(window,MenuStatut,OptionMenuStatut,Event,Jeu,X,Y,M,PlayingState,index):
+#Affiche le menu principal
+def DrawMainMenu(window,MenuStatut,OptionMenuStatut,Event,Jeu,X,Y,PlayingState,index):
     if MenuStatut:
 
         bouton1 = text(50,"Jouer",(255,255,255),(176,224,230),X/2,5/9*Y,window)
@@ -35,15 +40,15 @@ def DrawMainMenu(window,MenuStatut,OptionMenuStatut,Event,Jeu,X,Y,M,PlayingState
         for event in Event:
             if event.type == 5 and event.button == 1:
                 if bouton1.playRect.collidepoint(pygame.mouse.get_pos()):
-                    MenuStatut,M,PlayingState = False,True,True
+                    MenuStatut,PlayingState = False,True
                     index += 1
                 if bouton2.playRect.collidepoint(pygame.mouse.get_pos()):
-                    MenuStatut,OptionMenuStatut,M,PlayingState = False,True,False,False
+                    MenuStatut,OptionMenuStatut,PlayingState = False,True,False
                 if bouton3.playRect.collidepoint(pygame.mouse.get_pos()):
-                    Jeu,MenuStatut,OptionMenuStatut,M = False,False,False,False
-    return Jeu,MenuStatut,OptionMenuStatut,M,PlayingState,index
+                    Jeu,MenuStatut,OptionMenuStatut = False,False,False
+    return Jeu,MenuStatut,OptionMenuStatut,PlayingState,index
 
-
+#Affiche le menu des options
 def DrawOptionMenu(window,MainMenuState,MenuStatut,Event,X,Y):
     if MenuStatut:
         bouton = text(50,"Retour",(255,255,255),(176,224,230),X/2,7/9*Y,window)
@@ -55,7 +60,7 @@ def DrawOptionMenu(window,MainMenuState,MenuStatut,Event,X,Y):
 
 
 
-
+#Affiche les onglets à gauche en jeu
 def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y):
     if index != 0:
         bouton7 = text(20,"Suivant",(255,255,255),(120,120,120),1/20*X,14/15*Y,window)
@@ -68,30 +73,19 @@ def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y):
             for event in Event:
                 if event.type == 5 and event.button == 1:
                     if bouton.playRect.collidepoint(pygame.mouse.get_pos()):
-                        for i in range(len(matrice)):
-                            matrice[i].append(0)
-                        colonne += 1
-                        curdif -= 1
+                        colonne,matrice,curdif = Mapping.AddColonne(colonne,matrice,curdif,window)
                     if bouton2.playRect.collidepoint(pygame.mouse.get_pos()):
-                        newLine = []
-                        for i in range(colonne):
-                            newLine.append(0)
-                        matrice.append(newLine)
-                        ligne += 1
-                        curdif -= 1
+                        ligne,matrice,curdif = Mapping.AddLigne(ligne,colonne,matrice,Mapping.caseLen,Mapping.caseWid,curdif,window)
                     if bouton3.playRect.collidepoint(pygame.mouse.get_pos()) and colonne>5:
-                        for i in range(len(matrice)):
-                            matrice[i].pop()
-                        colonne -= 1
-                        curdif += 1
+                        colonne,matrice,curdif = Mapping.RemoveColonne(colonne,matrice,curdif)
                     if bouton4.playRect.collidepoint(pygame.mouse.get_pos())and ligne>5:
-                        matrice.pop()
-                        ligne -= 1
-                        curdif += 1
+                        ligne,matrice,curdif = Mapping.RemoveLigne(ligne,matrice,curdif)
                     if bouton7.playRect.collidepoint(pygame.mouse.get_pos()):
                         index += 1
         if index == 2:
             textbuild = text(20,"Dessine le chemin",(255,255,255),(120,120,120),150,20,window)
             textbuild2 = text(20,"Sur le plateau",(255,255,255),(120,120,120),150,70,window)
+            for event in Event:
+                Mapping.pathNumber = Mapping.setPath(event,matrice,colonne,ligne,Mapping.pathNumber)
 
     return colonne,ligne,curdif,matrice,index
