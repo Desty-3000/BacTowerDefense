@@ -1,14 +1,19 @@
 import pygame
 import ennemies
 
-def temp():
-    while vivant:
-        pygame.time.wait(1000)
-        score_temp += 10
-    return score_temp
+class score():
+    def __init__(self):
+        self.valeur = 0
 
-def ennemis(liste_killcount,liste_valeur_ennemis):
-    score_ennemis = 0
+
+
+def temp(phase):
+    if phase == 'vivant':
+        score_temp = 0
+        if pygame.time.get_time()%1000 == 0:
+            Score.valeur += 10
+
+def ennemis(score,liste_killcount,liste_valeur_ennemis):
     for position,valeur in enumerate(liste_valeur_ennemis):
-        score_ennemis += valeur*liste_killcount[position]
+        score.valeur += valeur*liste_killcount[position]
     return score_ennemis
