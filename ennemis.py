@@ -1,5 +1,5 @@
 import pygame
-import mapping
+import Mapping
 
 ennemis_vivant = []
 ennemis_vie = []

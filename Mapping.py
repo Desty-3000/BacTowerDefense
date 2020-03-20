@@ -2,13 +2,6 @@
 
 pygame.init()
 
-#Difficulté actuelle et à atteindre a virer dans la classe joueur dans le main
-Curr_Difficulte = 20
-Seuil_Difficulte = 10
-
-#Niveau a virer dans la classe joueur dans le main
-Niveau = 0
-
 #Int qui permet de connaitre le nombre de cases chemin (il vaut donc le dernier PathInt)
 pathNumber = -1
 
@@ -42,6 +35,7 @@ class case:
     innerRect = pygame.Rect(1,1,1,1)
     #Si la case fait partie du chemin ou non
     IsPath = False
+    HasTower = False
     #Int qui permet de connaitre l'ordre des cases chemin
     PathInt = -1
     def __init__(self,x,y,window,width,length):
@@ -79,6 +73,10 @@ class case:
         self.IsPath = False
         self.PathInt = -1
         return PathInt-1
+    def Lock(self):
+        self.HasTower = True
+    def Unlock(self):
+        self.HasTower = False
 
 #Matrice qui stocke toute les cases et leur ordre
 MAP =[]
@@ -96,7 +94,7 @@ def InitMap(window,MAP):
 
 #Renvoie l'objet case grâce à sa ligne et à sa colonne dans la matrice MAP
 def GetCase(colonne,ligne,MAP):
-    return MAP[ligne][colonne ]
+    return MAP[ligne][colonne]
 
 #Renvoie la liste de toutes les cases de la matrice MAP
 def GetCaseRectList(colonne,ligne,MAP):
@@ -167,6 +165,10 @@ def drawCases(MAP,colonne,ligne,w,l,grid,IsGridInit,pathN):
 def checkPathBuild(colonne,ligne,MAP,x,y,pathN):
 
     if pathN == -1: return True
+
+
+
+
     if y == colonne-1:
         if GetCasePathIntList(colonne,ligne,MAP)[x][y-1] == pathN: return True
         if x == 0:
@@ -176,6 +178,7 @@ def checkPathBuild(colonne,ligne,MAP,x,y,pathN):
         else:
             if GetCasePathIntList(colonne,ligne,MAP)[x+1][y] == pathN: return True
             if GetCasePathIntList(colonne,ligne,MAP)[x-1][y] == pathN: return True
+
     if y > 0 and y != colonne-1:
         if GetCasePathIntList(colonne,ligne,MAP)[x][y-1] == pathN: return True
         if GetCasePathIntList(colonne,ligne,MAP)[x][y+1] == pathN: return True
@@ -186,6 +189,7 @@ def checkPathBuild(colonne,ligne,MAP,x,y,pathN):
             if GetCasePathIntList(colonne,ligne,MAP)[x+1][y] == pathN: return True
         if x == 0:
             if GetCasePathIntList(colonne,ligne,MAP)[x+1][y] == pathN: return True
+
     if y == 0:
         if GetCasePathIntList(colonne,ligne,MAP)[x][y+1] == pathN: return True
         if x == ligne-1:
@@ -214,25 +218,4 @@ def setPath(event,MAP,colonne,ligne,pathN):
     return pathN
 
 
-# [A VIRER DANS MENU]
-#Raffraichi la barre de difficulté
-def Refresh_Difficulty_Bar(Curr_Difficulte,Seuil_Difficulte,fenetre,Show,X,Y):
-    if Show:
-        pygame.draw.rect(fenetre,(105,105,105),(2/6*X-1,19,2/6*X+2,22))
-        if Curr_Difficulte/Seuil_Difficulte >= 1:
-            pygame.draw.rect(fenetre,(255,255,0),(2/6*X,20,(2/6*X),20))
-        elif Curr_Difficulte <= 0:
-            pygame.draw.rect(fenetre,(255,255,0),(2/6*X,20,0,20))
-        else:
-            pygame.draw.rect(fenetre,(255,255,0),(2/6*X,20,(2/6*X)*(Curr_Difficulte/Seuil_Difficulte),20))
-        IntDif = text(20,str(Curr_Difficulte)+"/"+str(Seuil_Difficulte),(255,255,255),(176,224,230),2/7*X,20,fenetre)
-# [A VIRER DANS MENU]
-#Draw le GUI comme l'argent , le niveau ect
-def DrawGUI(window,PlayingState,X,Y,money,score,level,grid):
 
-    if PlayingState:
-        pygame.draw.rect(window,(120,120,120),(0,0,1/6*X,Y))
-        pygame.draw.rect(window,(34,139,34),(grid.x,grid.y,4/6*X,5/6*Y))
-        IntDif = text(20,str(money)+" $",(255,255,255),(176,224,230),7/10*X,20,window)
-        IntDif = text(20,str(score)+" pts",(255,255,255),(176,224,230),8/10*X,20,window)
-        IntDif = text(20,"lvl "+str(level),(255,255,255),(176,224,230),9/10*X,20,window)
