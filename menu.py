@@ -146,18 +146,27 @@ def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y,pop
 
             tourelle1RectB = pygame.draw.rect(window,(0,0,0),(leftGUI.x,leftGUI.y+1/8*Y+2,1/6*X,1/5*Y),2)
             tourelle1Rect = pygame.draw.rect(window,(150,150,150),(leftGUI.x,leftGUI.y+1/8*Y+2,1/6*X,1/5*Y))
-            tourelle1Disp = pygame.draw.rect(window,(255,255,255),(tourelle1Rect.x+(1/20*tourelle1Rect.width),tourelle1Rect.centery-(int(tourelle1Rect.height/8)),int(tourelle1Rect.width/4),int(tourelle1Rect.height/4)))
+            tourelle1img = pygame.image.load('cannon.png')
+            tourelle1img = pygame.transform.scale(tourelle1img, (int(tourelle1Rect.height/(3/2)),int(tourelle1Rect.width/3)))
+            tourelle1imgpos = (tourelle1Rect.x+(1/20*tourelle1Rect.width),tourelle1Rect.centery-(int(tourelle1Rect.height/4)))
+            window.blit(tourelle1img, tourelle1imgpos)
             tourelle1Desc = btnTourelle("Cannon",4,1,"Explosif",2,10,tourelle1Rect,window)
 
 
             tourelle2RectB = pygame.draw.rect(window,(0,0,0),(leftGUI.x,leftGUI.y+1/8*Y+1/5*Y+4,1/6*X,1/5*Y),2)
             tourelle2Rect = pygame.draw.rect(window,(150,150,150),(leftGUI.x,leftGUI.y+1/8*Y+1/5*Y+4,1/6*X,1/5*Y))
-            tourelle2Disp = pygame.draw.rect(window,(49,140,231),(tourelle2Rect.x+(1/20*tourelle2Rect.width),tourelle2Rect.centery-(int(tourelle2Rect.height/8)),int(tourelle2Rect.width/4),int(tourelle2Rect.height/4)))
+            tourelle2img = pygame.image.load('artefact.png')
+            tourelle2img = pygame.transform.scale(tourelle2img, (int(tourelle2Rect.width/4),int(tourelle2Rect.height/(3/2))))
+            tourelle2imgpos = (tourelle2Rect.x+(1/20*tourelle2Rect.width),tourelle2Rect.centery-(int(tourelle2Rect.height/4)))
+            window.blit(tourelle2img, tourelle2imgpos)
             tourelle2Desc = btnTourelle("Artefact",2,3,"Magique",1,60,tourelle2Rect,window)
 
             tourelle3RectB = pygame.draw.rect(window,(0,0,0),(leftGUI.x,leftGUI.y+1/8*Y+2/5*Y+6,1/6*X,1/5*Y),2)
             tourelle3Rect = pygame.draw.rect(window,(150,150,150),(leftGUI.x,leftGUI.y+1/8*Y+2/5*Y+6,1/6*X,1/5*Y))
-            tourelle3Disp = pygame.draw.rect(window,(139,0,0),(tourelle3Rect.x+(1/20*tourelle3Rect.width),tourelle3Rect.centery-(int(tourelle3Rect.height/8)),int(tourelle3Rect.width/4),int(tourelle3Rect.height/4)))
+            tourelle3img = pygame.image.load('tesla.png')
+            tourelle3img = pygame.transform.scale(tourelle3img, (int(tourelle3Rect.width/4),int(tourelle3Rect.height/(3/2))))
+            tourelle3imgpos = (tourelle3Rect.x+(1/20*tourelle3Rect.width),tourelle3Rect.centery-(int(tourelle3Rect.height/4)))
+            window.blit(tourelle3img, tourelle3imgpos)
             tourelle3Desc = btnTourelle("Tesla",1,1,"Electrique",6,100,tourelle3Rect,window)
 
             arrowdownRectB = pygame.draw.rect(window,(0,0,0),(leftGUI.x,leftGUI.y+1/8*Y+3/5*Y+8,1/6*X,1/8*Y),2)
@@ -183,14 +192,15 @@ def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y,pop
 
                             #def __init__(self,nom,degats,vitesseA,element,distance,prix,tourelle1Rect,window):
                     if grid.collidepoint(pygame.mouse.get_pos()):
+
                         if currentTower == 1:
-                            tower.currentTower,tower.listeTower,Mapping.MAP,money  = tower.createTower(tower.listeTower,4,"Explosif",1,currentTower,1,matrice,colonne,ligne,10,money)
+                            tower.currentTower,tower.listeTower,Mapping.MAP,money  = tower.createTower(tower.listeTower,4,"Explosif",1,currentTower,1,matrice,colonne,ligne,10,money,pygame.image.load('cannon.png'))
                             currentTower = 0
                         if currentTower == 2:
-                            tower.currentTower,tower.listeTower,Mapping.MAP,money  = tower.createTower(tower.listeTower,2,"Magique",3,currentTower,2,matrice,colonne,ligne,60,money)
+                            tower.currentTower,tower.listeTower,Mapping.MAP,money  = tower.createTower(tower.listeTower,2,"Magique",3,currentTower,2,matrice,colonne,ligne,60,money,pygame.image.load('artefact.png'))
                             currentTower = 0
                         if currentTower == 3:
-                            tower.currentTower,tower.listeTower,Mapping.MAP,money = tower.createTower(tower.listeTower,1,"Electrique",1,currentTower,3,matrice,colonne,ligne,100,money)
+                            tower.currentTower,tower.listeTower,Mapping.MAP,money = tower.createTower(tower.listeTower,1,"Electrique",1,currentTower,3,matrice,colonne,ligne,100,money,pygame.image.load('tesla.png'))
                             currentTower = 0
                 if event.type == 5 and event.button == 3:
                     currentTower = 0

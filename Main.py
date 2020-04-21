@@ -48,7 +48,7 @@ while Jeu :
     #DrawMappingMenu
     Mapping.nbreColonne,Mapping.nbreLigne,plyManager.difficulte,Mapping.MAP,menu.MappingPhaseIndex,menu.activesPop,menu.clic,tower.currentTower,plyManager.argent = menu.DrawMappingMenu(fenetre,menu.MappingPhaseIndex,events,Mapping.nbreLigne,Mapping.nbreColonne,plyManager.difficulte,Mapping.MAP,Mapping.GRID,X,Y,menu.activesPop,Mapping.pathNumber,menu.clic,menu.leftGUI,plyManager.argent,tower.currentTower)
     #TowerPlacement
-    tower.towerRect = tower.TowerPlacement(fenetre,tower.currentTower,tower.towerRect,Mapping.caseLen,Mapping.caseWid)
+    tower.TowerPlacement(fenetre,tower.currentTower,Mapping.caseLen,Mapping.caseWid)
 
     for popup in menu.activesPop:
         popup.Draw(fenetre)

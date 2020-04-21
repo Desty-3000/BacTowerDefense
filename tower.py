@@ -14,22 +14,24 @@ towerRect = pygame.Rect(0,0,0,0)
 
 #classe d'une tourelle type
 class tower:
-    def __init__(self,degats,element,vitesseA,colorint):
-        self.degats,self.element,self.vitesseA,self.colorint = degats,element,vitesseA,colorint
+    def __init__(self,degats,element,vitesseA,colorint,sprite):
+        self.degats,self.element,self.vitesseA,self.colorint,self.sprite = degats,element,vitesseA,colorint,sprite
     #pour la poser sur le grid
     def setPos(self,case):
-        self.Pos = pygame.Rect(case.x+(1/4*case.width),case.y+(1/4*case.height),1/2*case.width,1/2*case.height)
+        if self.colorint == 1:
+            self.Pos = pygame.Rect(case.x+(1/4*case.width),case.y+(1/4*case.height),2/4*case.width,2/4*case.height)
+        elif self.colorint == 2:
+            self.Pos = pygame.Rect(case.x+(2/6*case.width),case.y-(1/8*case.height),2/6*case.width,case.height)
+        elif self.colorint == 3:
+            self.Pos = pygame.Rect(case.x+(1/4*case.width),case.y-(1/8*case.height),2/4*case.width,case.height)
     #pour l'afficher
     def Draw(self,window):
-        if self.colorint == 1:
-            self.Pos = pygame.draw.rect(window,(255,255,255),self.Pos)
-        if self.colorint == 2:
-            self.Pos = pygame.draw.rect(window,(49,140,231),self.Pos)
-        if self.colorint == 3:
-            self.Pos = pygame.draw.rect(window,(139,0,0),self.Pos)
+        self.sprite = pygame.transform.scale(self.sprite, (self.Pos.width, self.Pos.height))
+        window.blit(self.sprite, (self.Pos.x,self.Pos.y))
+
 
 #Au moment du clique sur le grid pour la poser dessus et retirer l'argent
-def createTower(liste,degats,element,vitesseA,currentTower,colorint,MAP,colonne,ligne,price,money):
+def createTower(liste,degats,element,vitesseA,currentTower,colorint,MAP,colonne,ligne,price,money,sprite):
     if currentTower != 0:
         cursor = pygame.Rect(pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1],1,1)
         test = cursor.collidelist(Mapping.GetCaseRectList(colonne,ligne,MAP))
@@ -39,7 +41,8 @@ def createTower(liste,degats,element,vitesseA,currentTower,colorint,MAP,colonne,
             else:
                 currCase = Mapping.GetCase(test-colonne*int(test/colonne),int(test/colonne),MAP)
             if currCase.IsPath == False and currCase.HasTower == False:
-                newTower = tower(degats,element,vitesseA,colorint)
+                sprite = pygame.transform.scale(sprite, (int(currCase.width), int(currCase.length)))
+                newTower = tower(degats,element,vitesseA,colorint,sprite)
                 newTower.setPos(currCase.innerRect)
                 liste.append(newTower)
                 currentTower = 0
@@ -60,19 +63,20 @@ def checkCost(money,price):
         return True
 
 #Affiche la prévisualisation de la tourelle
-def TowerPlacement(window,currentTower,towerRect,casel,casew):
+def TowerPlacement(window,currentTower,casel,casew):
 
     if currentTower != 0:
         if currentTower == 1:
-            couleur = (255,255,255)
+            img = pygame.image.load('cannon.png')
+            img = pygame.transform.scale(img, (int(2/4*casew),int(2/4*casel)))
         elif currentTower == 2:
-            couleur = (49,140,231)
+            img = pygame.image.load('artefact.png')
+            img = pygame.transform.scale(img, (int(2/6*casew),int(casel)))
         elif currentTower == 3:
-            couleur = (139,0,0)
-        towerRect = pygame.draw.rect(window,couleur,(pygame.mouse.get_pos()[0]-int(casew/4),pygame.mouse.get_pos()[1]-int(casel/4),int(casew/2),int(casel/2)))
-    else :
-        towerRect = pygame.Rect(0,0,0,0)
-
-    return towerRect
+            img = pygame.image.load('tesla.png')
+            img = pygame.transform.scale(img, (int(2/4*casew),int(casel)))
+        imgpos = img.get_rect()
+        imgpos.center = (pygame.mouse.get_pos()[0],pygame.mouse.get_pos()[1])
+        window.blit(img,imgpos)
 
 
