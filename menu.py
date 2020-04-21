@@ -210,7 +210,10 @@ def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y,pop
 #Affiche le GUI comme l'argent , le niveau ect
 def DrawGUI(window,PlayingState,X,Y,money,score,level,grid):
     if PlayingState:
-        leftMenu = pygame.draw.rect(window,(120,120,120),(0,0,1/6*X,Y))
+        leftMenu = pygame.Rect((0,0,1/6*X,Y))
+        leftMenuimg = pygame.image.load("leftguimenu.png")
+        lefMenuimg = pygame.transform.scale(leftMenuimg, (int(1/6*X),int(Y)))
+        window.blit(lefMenuimg,(0,0))
         pygame.draw.rect(window,(34,139,34),(grid.x,grid.y,4/6*X,5/6*Y))
         IntDif = text(20,str(money)+" $",(255,255,255),(176,224,230),7/10*X,20,window)
         IntDif = text(20,str(score)+" pts",(255,255,255),(176,224,230),8/10*X,20,window)
