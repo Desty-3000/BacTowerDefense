@@ -95,7 +95,7 @@ def DrawOptionMenu(window,MainMenuState,MenuStatut,Event,X,Y):
 
 
 #Affiche les onglets à gauche en jeu
-def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y,pop,pathN,clic,gui,money,currentTower):
+def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y,pop,pathN,clic,gui,money,currentTower,état):
     if index != 0:
         if index !=3:
             bouton7 = text(20,"Suivant",(255,255,255),(120,120,120),1/20*X,14/15*Y,window)
@@ -125,6 +125,7 @@ def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y,pop
             for event in Event:
                 if clic == 2:
                     Mapping.pathNumber = Mapping.setPath(event,matrice,colonne,ligne,Mapping.pathNumber)
+                    Mapping.Spawn = Mapping.setSpawn(Mapping.Spawn,colonne,ligne,matrice)
                 if event.type == 5 and event.button == 1:
                     if clic <2:
                         clic +=1
@@ -133,6 +134,7 @@ def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y,pop
                         popp = popup(1/4*X,1/4*Y,1/2*X,1/2*Y,(120,120,120),"Etape 3 : Préparation de l'équipement","Achète des tourelles avec le menu défilant","Clique droit pour annuler la selection")
                         pop.append(popp)
                         index +=1
+                        print(Mapping.Spawn)
         if index == 3:
             next = text(20,"Lancer",(255,255,255),(120,120,120),gui.centerx,14/15*Y,window)
 
@@ -179,6 +181,8 @@ def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y,pop
 
             for event in Event:
                 if event.type == 5 and event.button == 1:
+                    if next.playRect.collidepoint(pygame.mouse.get_pos()):
+                        état = True
                     if tourelle1Rect.collidepoint(pygame.mouse.get_pos()):
                         if tower.checkCost(money,10) == True:
                             currentTower = 1
@@ -205,7 +209,7 @@ def DrawMappingMenu(window,index,Event,ligne,colonne,curdif,matrice,grid,X,Y,pop
                 if event.type == 5 and event.button == 3:
                     currentTower = 0
 
-    return colonne,ligne,curdif,matrice,index,pop,clic,currentTower,money
+    return colonne,ligne,curdif,matrice,index,pop,clic,currentTower,money,état
 
 #Affiche le GUI comme l'argent , le niveau ect
 def DrawGUI(window,PlayingState,X,Y,money,score,level,grid):

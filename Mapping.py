@@ -19,6 +19,7 @@ nbreColonne = 10
 caseWid = 20
 caseLen = 20
 
+Spawn = []
 
 #Classe pour simplifier l'écriture sur l'écran
 class text:
@@ -35,6 +36,7 @@ class case:
     innerRect = pygame.Rect(1,1,1,1)
     #Si la case fait partie du chemin ou non
     IsPath = False
+    IsSpawn = False
     HasTower = False
     #Int qui permet de connaitre l'ordre des cases chemin
     PathInt = -1
@@ -66,6 +68,8 @@ class case:
         if self.PathInt == -1:
             self.IsPath = True
             self.PathInt = PathInt+1
+            if self.PathInt == 0:
+                self.IsSpawn = True
             return PathInt+1
         return PathInt
     #Cette fonction est apellée pour retirer la case du chemin
@@ -163,12 +167,7 @@ def drawCases(MAP,colonne,ligne,w,l,grid,IsGridInit,pathN):
 #[A OPTIMISER PSK DEGEU]
 #Grosse fonction pas belle à lire du tout qui check avant le placement d'une case chemin si il y en a bien une deja adjacente
 def checkPathBuild(colonne,ligne,MAP,x,y,pathN):
-
     if pathN == -1: return True
-
-
-
-
     if y == colonne-1:
         if GetCasePathIntList(colonne,ligne,MAP)[x][y-1] == pathN: return True
         if x == 0:
@@ -214,8 +213,12 @@ def setPath(event,MAP,colonne,ligne,pathN):
                     pathN = MAP[0][test].AddToPath(pathN)
                 else:
                     pathN = MAP[int(test/colonne)][test-colonne*int(test/colonne)].AddToPath(pathN)
-
     return pathN
 
-
-
+def setSpawn(Spawn,colonne,ligne,MAP):
+    pathintValue = GetCasePathIntList(colonne,ligne,MAP)
+    for ligne in pathintValue:
+        for valeur in ligne:
+            if valeur == 0:
+                Spawn = [ligne.index(0),pathintValue.index(ligne)]
+    return Spawn
