@@ -1,15 +1,10 @@
-﻿import ennemis
+import ennemis
 import Mapping
 import pygame
 import menu
 import tower
-import enum
-pygame.init()
 
-class Game(enum):
-    MAPPING = 1
-    PLAYING = 2
-    PAUSE = 3
+pygame.init()
 
 class Player:
     niveau = 0
@@ -18,7 +13,7 @@ class Player:
     difficulte= 20
     difficulteMax= 10
     WaveActuel = 1
-    GameState = Game.MAPPING
+    IsPlaying = False
 
 def Time(seconde):
     initTemp = pygame.time.get_ticks()
@@ -46,7 +41,7 @@ while Jeu :
     events = pygame.event.get()
     fenetre.fill(couleurFond)
     seconde = Time(seconde)
-    if plyManager.GameState == Game.MAPPING:
+    if plyManager.IsPlaying == False:
         #DimissPopup
         menu.activesPop =  menu.DimissPopup(menu.activesPop,events)
         #drawMap
@@ -65,12 +60,9 @@ while Jeu :
         Mapping.nbreColonne,Mapping.nbreLigne,plyManager.difficulte,Mapping.MAP,menu.MappingPhaseIndex,menu.activesPop,menu.clic,tower.currentTower,plyManager.argent,plyManager.IsPlaying = menu.DrawMappingMenu(fenetre,menu.MappingPhaseIndex,events,Mapping.nbreLigne,Mapping.nbreColonne,plyManager.difficulte,Mapping.MAP,Mapping.GRID,X,Y,menu.activesPop,Mapping.pathNumber,menu.clic,menu.leftGUI,plyManager.argent,tower.currentTower,plyManager.IsPlaying)
         #TowerPlacement
         tower.TowerPlacement(fenetre,tower.currentTower,Mapping.caseLen,Mapping.caseWid)
-    if plyManager.GameState == Game.PLAYING:
+    else:
         ennemis.EnnemisSpawned = ennemis.spawn_ennemis(seconde,ennemis.inittime,ennemis.EnnemisSpawned,plyManager.WaveActuel,ennemis.WaveEnnemieList)
         print(ennemis.EnnemisSpawned)
-    if plyManager.GameState == Game.PAUSE:
-        #Do something ...
-        break
 
 
 
@@ -87,10 +79,3 @@ while Jeu :
 
 pygame.display.quit()
 pygame.quit()
-
-
-
-
-
-
-
